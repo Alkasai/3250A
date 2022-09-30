@@ -10,3 +10,9 @@ https://www.anaconda.com/distribution/
 
 ## SQL
 https://sqlitestudio.pl
+
+## F#
+https://fsharp.org/
+
+## F# for Data Science
+https://fslab.org/
