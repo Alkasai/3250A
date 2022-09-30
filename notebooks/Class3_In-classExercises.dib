@@ -1,0 +1,91 @@
+#!markdown
+
+Create a list with the following variables: 1,2,3,5,6,7
+
+#!fsharp
+
+let list1 = [1;2;3;5;6;7]
+list1
+
+#!markdown
+
+Calculate the difference between the last element of the list and the 3rd element of the list.
+
+#!fsharp
+
+(list1 |> List.last) - (list1[2])
+
+#!markdown
+
+Write a function which takes each EVEN number in the list and multiplies it by 3.
+
+#!fsharp
+
+let multEven l =
+    for i in list1 do
+        if i % 2 = 0 then
+            printfn $"{i*3}"
+
+#!fsharp
+
+multEven list1
+
+#!markdown
+
+Create a dictionary of any elements you want, and write a function to print just the keys of the dictionary.
+
+#!fsharp
+
+let d = ["a", 1; "b", 2; "c", 3] |> Map.ofList
+
+#!fsharp
+
+for (KeyValue(k,_)) in d do
+    printfn $"%s{k}"
+
+#!markdown
+
+Define a function with 3 variables as inputs. The function should check if the last variable is a number between the first 2 variables, and if so, return TRUE. Otherwise, return FALSE.
+
+#!fsharp
+
+let foo a b c =
+    c < b && c > a
+
+#!fsharp
+
+foo 4 6 5
+
+#!fsharp
+
+foo 4 5 6
+
+#!markdown
+
+Define a function to find the MEDIAN value in a given list.
+
+#!fsharp
+
+let median (ls: int list) =
+    let l = ls.Length
+    if l = 0 then
+        0
+    else
+        let ls_sorted = ls |> List.sort
+        let i = l / 2
+        if l % 2 <> 0 then
+            ls_sorted[i]
+        else
+            (ls_sorted[i-1] + ls_sorted[i])/2
+
+#!fsharp
+
+median([1;3;3;6;7;8;9])
+
+#!fsharp
+
+median([1;2;3;4;5;6;8;9])
+
+#!fsharp
+
+median([])
