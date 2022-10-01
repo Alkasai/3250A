@@ -1,0 +1,115 @@
+#!csharp
+
+#r "nuget:Microsoft.DotNet.Interactive.SqlServer,*-*"
+
+#!csharp
+
+#!connect mssql -h
+
+#!csharp
+
+#!connect mssql --kernel-name PracticeDB "Data Source=ALKASAI-SB\SQLEXPRESS; Initial Catalog=PracticeDB; User Id=sa; Password=blah;"
+
+#!markdown
+
+# Inject Data into PracticeDB
+
+#!sql
+
+#!sql-PracticeDB
+BEGIN TRANSACTION;
+
+DROP TABLE IF EXISTS TransactionData;
+DROP TABLE IF EXISTS CustomerData;
+DROP TABLE IF EXISTS BranchData;
+
+-- Table: BranchData
+CREATE TABLE BranchData (BranchNumber int PRIMARY KEY, Location TEXT);
+INSERT INTO BranchData (BranchNumber, Location) VALUES (987, 'London');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (1233, 'Yellowknife');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (1343, 'Toronto');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (2398, 'Vancouver');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (3456, 'Victoria');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (4353, 'Calgary');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (4576, 'Ottawa');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (6786, 'Kingston');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (7654, 'Montreal');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (7658, 'Moose Jaw');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (8967, 'St. John');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (8968, 'Edmonton');
+INSERT INTO BranchData (BranchNumber, Location) VALUES (9878, 'Windsor');
+
+-- Table: CustomerData
+CREATE TABLE CustomerData (CustomerID int PRIMARY KEY, Name TEXT, Age NUMERIC, City TEXT, HomeBranch int, AccountBalance int);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1000, 'John Smith', 34, 'Toronto', 1343, 8485);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1001, 'Alex Badlands', 22, 'Victoria', 3456, 6943);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1002, 'Gina Bradley', 46, 'London', 8967, 777);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1003, 'Eleanor Johnston', 62, 'London', 8967, 2683);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1004, 'Eleanor Bigsby', 42, 'Smiths Falls', 2398, 6244);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1005, 'Donalt Tower', 56, 'Ottawa', 3456, 147);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1006, 'Norman Patty', 48, 'Kingston', 2398, 2787);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1007, 'Megatron', 45, 'Montreal', 2398, 9157);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1100, 'Alina Redshaw', 65, 'Vancouver', 4576, 6398);
+INSERT INTO CustomerData (CustomerID, Name, Age, City, HomeBranch, AccountBalance) VALUES (1101, 'Taylor Swift', 18, 'Toronto', 1343, 8391);
+
+-- Table: TransactionData
+CREATE TABLE TransactionData (TransactionID TEXT, TransactionAmount NUMERIC, TransactionCity TEXT, TransactionType TEXT, CustomerID int REFERENCES CustomerData (CustomerID), AccountNumber NUMERIC);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658985', 3, 'Toronto', 'Coffee Shop', 1000, 56897);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658986', 948, 'Toronto', 'Electronics', 1001, 45679);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658987', 36, 'Vancouver', 'Groceries', 1100, 68975);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658988', 29, 'Toronto', 'Coffee Shop', 1101, 58975);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658989', 621, 'London', 'Travel', 1002, 54687);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658990', 957, 'London', 'Electronics', 1003, 53459);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658991', 979, 'Smiths Falls', 'Electronics', 1004, 23154);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658992', 844, 'Ottawa', 'Mortgage', 1005, 87354);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658993', 14, 'Kingston', 'Coffee Shop', 1006, 45128);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658994', 399, 'Montreal', 'Car', 1007, 99784);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658995', 48, 'Toronto', 'Restaurants', 1000, 56897);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658996', 239, 'Victoria', 'Car', 1001, 45679);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658997', 559, 'Toronto', 'Electronics', 1100, 68975);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658998', 215, 'Toronto', 'Restaurants', 1101, 58975);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('658999', 67, 'London', 'Groceries', 1002, 54687);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659000', 1, 'London', 'Coffee Shop', 1003, 53459);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659001', 636, 'Smiths Falls', 'Mortgage', 1004, 23154);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659002', 946, 'Ottawa', 'Electronics', 1005, 87354);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659003', 7, 'Kingston', 'Coffee Shop', 1006, 45128);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659004', 927, 'Montreal', 'Mortgage', 1007, 99784);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659005', 655, 'Toronto', 'Fashion', 1000, 56897);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659006', 638, 'Victoria', 'Mortgage', 1001, 45679);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659007', 30, 'Vancouver', 'Fashion', 1100, 68975);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659008', 327, 'Toronto', 'Fashion', 1101, 58975);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659009', 60, 'London', 'Groceries', 1002, 54687);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659010', 920, 'London', 'Travel', 1003, 53459);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659011', 25, 'London', 'Restaurants', 1004, 23154);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659012', 493, 'Ottawa', 'Fashion', 1005, 87354);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659013', 946, 'London', 'Travel', 1006, 45128);
+INSERT INTO TransactionData (TransactionID, TransactionAmount, TransactionCity, TransactionType, CustomerID, AccountNumber) VALUES ('659014', 686, 'Montreal', 'Travel', 1007, 99784);
+
+COMMIT TRANSACTION;
+
+#!markdown
+
+# Assignment 1
+
+#!markdown
+
+### 1. How many customers transact in a city other than their home city? You will need to find each customer’s Home Branch location and compare it to the location of their transaction (i.e. Transaction City).
+
+#!sql
+
+#!sql-PracticeDB
+SELECT nhbl.CustomerID, COUNT(nhbl.CustomerID) FROM (
+    SELECT bl.CustomerID FROM (
+        SELECT c.CustomerID, b.BranchNumber, b.Location FROM CustomerData c
+        LEFT JOIN BranchData b
+        ON c.HomeBranch = b.BranchNumber
+    ) bl
+    LEFT JOIN TransactionData t
+    ON bl.CustomerID = t.CustomerID
+    WHERE bl.Location NOT LIKE t.TransactionCity
+) nhbl
+GROUP BY nhbl.CustomerID
+
+#!markdown
+
+### 2. Which customers have the highest single transaction in each city?
